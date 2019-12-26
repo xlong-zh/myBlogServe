@@ -13,5 +13,5 @@ require('./router/admin/index.js')(app);
 require('./router/web/index.js')(app);
 
 app.listen(4000, () => {
-  console.log('服务器开启成功http://localhost:4000');
+  console.log('服务器开启成功:http://localhost:4000');
 });
