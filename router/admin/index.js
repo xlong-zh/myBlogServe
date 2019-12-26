@@ -110,6 +110,7 @@ module.exports = app => {
     const user = await User.findOne({ username });
     if (!user) {
       return res.status(422).send({
+        code: 501,
         message: '用户不存在'
       });
     }
@@ -117,12 +118,19 @@ module.exports = app => {
     const isValid = require('bcrypt').compareSync(password, user.password);
     if (!isValid) {
       return res.status(422).send({
+        code: 501,
         message: '密码错误'
       });
     }
-    //返回token
+    //返回token和数据
     const token = jwt.sign({ id: user._id }, app.get('secret'));
-    res.send({ token });
+    res.send({ code: 0, message: '登陆成功', result: { token, username: user.username } });
+  });
+  //获取权限列表
+  app.post(`/admin/api/permissionList`, async (req, res) => {
+    const user = await User.findOne({ username: req.body });
+    //返回token和数据
+    res.send({ code: 0, message: '获取成功', result: { permissionList: user.permissionList } });
   });
 
   //错误处理
