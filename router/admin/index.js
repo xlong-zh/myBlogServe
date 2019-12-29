@@ -128,7 +128,7 @@ module.exports = app => {
   });
   //获取权限列表
   app.post(`/admin/api/permissionList`, async (req, res) => {
-    const user = await User.findOne({ username: req.body });
+    const user = await User.findOne({ username: req.body.username });
     //返回token和数据
     res.send({ code: 0, message: '获取成功', result: { permissionList: user.permissionList } });
   });
